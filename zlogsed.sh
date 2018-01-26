@@ -11,13 +11,13 @@ if [ -z $2 ]; then
 fi;
 
 for filename in `ls $1 | grep gz`; do
-    gzip -d -c $filename > temp.log;
-    strCount=$(grep -o "$2" ./temp.log | wc -l);
+    gzip -d -c $1/$filename > $1/temp.log;
+    strCount=$(grep -o "$2" $1/temp.log | wc -l);
     echo $filename "=>" $strCount;
     if [ "$strCount" != "0" ]; then
-        sed -i "/$2/d" ./temp.log;
+        sed -i "/$2/d" $1/temp.log;
     fi;
-    rm $filename;
-    gzip -c temp.log > $filename;
-    rm temp.log;
+    rm $1/$filename;
+    gzip -c $1/temp.log > $1/$filename;
+    rm $1/temp.log;
 done;

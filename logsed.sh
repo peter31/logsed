@@ -11,6 +11,6 @@ if [ -z $2 ]; then
 fi;
 
 for filename in `ls $1 | grep -v "gz$"`; do
-    echo $filename "=>" $(grep -o "$2" ./$filename | wc -l);
-    sed -i "/$2/d" ./$filename;
+    echo $filename "=>" $(grep -o "$2" $1/$filename | wc -l);
+    sed -i "/$2/d" $1/$filename;
 done;
