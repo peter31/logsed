@@ -10,7 +10,11 @@ if [ -z $2 ]; then
 	exit 1;
 fi;
 
+checkWords=$( echo "$2" | sed 's/,/ /g' );
+
 for filename in `ls $1 | grep -v "gz$"`; do
-    echo $filename "=>" $(grep -o "$2" $1/$filename | wc -l);
-    sed -i "/$2/d" $1/$filename;
+    for word in $checkWords; do
+    	echo $filename "("$word")" "=>" $(grep -o "$word" $1/$filename | wc -l);
+    	sed -i "/$word/d" $1/$filename;
+	done;
 done;
